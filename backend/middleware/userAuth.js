@@ -4,20 +4,21 @@ const userAuth = async (req , res , next)=>{
     const {token} = req.cookies;
     
     if(!token){
-         return res.status(401).json({message : "Not authorized , Login agian"});
+         return res.status(401).json({success:false,message : "Not authorized , Login agian"});
     }
     try{
         const tokenDecode = jwt.verify(token , process.env.JWT_SECRET);
         
         if(tokenDecode.id){
-            req.body.userId = tokenDecode.id;
+            req.userId = tokenDecode.id;
         }
         else{
-            return res.json({message : "Not authorized , Login agian"});
+            return res.json({success:false,message : "Not authorized , Login agian"});
         }
         next();
     }catch(error){
-         res.status(500).json({message : error.message});
+        console.log('error is here')
+         res.status(500).json({success:false,message : error.message});
     }
 
 

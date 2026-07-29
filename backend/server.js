@@ -8,7 +8,11 @@ import userRouter from "./routes/userRoutes.js";
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors())
+const allowedOrigins = ["http://localhost:5173"]
+app.use(cors({
+    origin :allowedOrigins,
+    credentials:true,
+}))
 app.use(cookieParser());
 app.get("/", (req, res) => {
     res.send("Welcome to the API");
